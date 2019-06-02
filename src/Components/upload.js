@@ -7,7 +7,10 @@ class FileUpload extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            file: null
+            file: null,
+            title: "",
+            descripton: "",
+            allImages: []
         }
         this.onFormSubmit = this.onFormSubmit.bind(this)
         this.onChange = this.onChange.bind(this)
@@ -34,13 +37,79 @@ class FileUpload extends Component {
         return axios.post(url, formData, config)
     }
 
+    onChange2 = e => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({
+            [name]: value
+        })
+    };
+
+    // *****************get all images****************
+    componentDidMount() {
+        axios.get("http://localhost:4000/getAllImages")
+            .then(response => {
+                this.setState({ allImages: response.data });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
+
     render() {
         return (
-            <form onSubmit={this.onFormSubmit}>
-                <h1>File Upload</h1>
-                <input type="file" name='file' onChange={this.onChange} />
-                <button type="submit">Upload</button>
-            </form>
+            <React.Fragment>
+                <div>
+                    {console.log(this.state.allImages)}
+                    <div className="boxOne">
+                        <form onSubmit={this.onFormSubmit}>
+                            <h2>Create Image Upload:</h2>
+                            <section>
+                                <label className="font">title:</label>
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    name="title"
+                                    id="title"
+                                    value={this.state.title}
+                                    onChange={this.onChange2}
+                                />
+                            </section>
+                            <section>
+                                <label className="font">description:</label>
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    name="description"
+                                    id="description"
+                                    value={this.state.description}
+                                    onChange={this.onChange2}
+                                />
+                            </section>
+                            <br></br>
+                            <input type="file" name='file' onChange={this.onChange} />
+                            <button type="submit">Upload</button>
+                        </form>
+                    </div>
+                    <div className="boxTwo">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th >Title</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>example</td>
+                                    <td>example</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </React.Fragment>
         )
     }
 }

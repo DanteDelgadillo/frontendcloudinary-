@@ -1,16 +1,19 @@
 import React from 'react';
 
-import './App.css';
-import FileUpload from "./Components/upload";
+import './App.css'
+import NavBar from "./Components/navBar";
+import { BrowserRouter } from "react-router-dom";
+import Main from "./Components/main";
 
 function App() {
   return (
     <React.Fragment >
-
-      <h1>hello world</h1>
-      <div>
-        <FileUpload></FileUpload>
-      </div>
+      <NavBar />
+      <BrowserRouter>
+        <div>
+          <Main />
+        </div>
+      </BrowserRouter>
     </React.Fragment>
   );
 }
