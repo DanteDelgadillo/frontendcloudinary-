@@ -1,6 +1,15 @@
 import React, { Component } from 'react'
 import axios from "axios";
 
+const Image = props => (
+    <tr>
+
+        <td>{props.image.title}</td>
+        <td>{props.image.description}</td>
+        <td><button type="button" onClick={() => props.deleteimage(props.image._id)} className="btn btn-danger " > Delete </button ></td>
+    </tr>
+)
+
 
 class FileUpload extends Component {
 
@@ -18,23 +27,31 @@ class FileUpload extends Component {
     }
     onFormSubmit(e) {
         e.preventDefault() // Stop form submit
-        this.fileUpload(this.state.file).then((response) => {
-            console.log(response.data);
-        })
+        this.fileUpload(this.state.file)
     }
     onChange(e) {
         this.setState({ file: e.target.files[0] })
     }
     fileUpload(file) {
+        const description = this.state.descripton;
+        const title = this.state.title;
+
         const url = 'http://localhost:4000/images/add';
         const formData = new FormData();
-        formData.append('file', file)
+        formData.append('file', file);
+        formData.append('title', title);
+        formData.append('description', description);
+
         const config = {
             headers: {
                 'content-type': 'multipart/form-data'
             }
         }
+
         return axios.post(url, formData, config)
+            .then(res => console.log(res.data))
+
+
     }
 
     onChange2 = e => {
@@ -56,12 +73,35 @@ class FileUpload extends Component {
             })
     }
 
+    // ***********Delete image by id *****************
+
+    deleteimage(imageid) {
+        const newImage = this.state.allImages.filter(image => image._id !== imageid)
+
+        this.setState({
+            allImages: newImage
+        })
+        console.log(newImage)
+        axios.delete("http://localhost:4000/image/delete/" + imageid)
+            .then(res => console.log(res.data))
+            .catch(function (error) {
+                console.log(error);
+            })
+
+    }
+
+
+    imageList() {
+        return this.state.allImages.map((cuurentImage, i) => {
+            return <Image image={cuurentImage} deleteimage={this.deleteimage.bind(this)} key={i} />
+        })
+    }
+
 
     render() {
         return (
             <React.Fragment>
                 <div>
-                    {console.log(this.state.allImages)}
                     <div className="boxOne">
                         <form onSubmit={this.onFormSubmit}>
                             <h2>Create Image Upload:</h2>
@@ -77,13 +117,13 @@ class FileUpload extends Component {
                                 />
                             </section>
                             <section>
-                                <label className="font">description:</label>
+                                <label className="font">descripton:</label>
                                 <input
                                     className="form-control"
                                     type="text"
-                                    name="description"
-                                    id="description"
-                                    value={this.state.description}
+                                    name="descripton"
+                                    id="descripton"
+                                    value={this.state.descripton}
                                     onChange={this.onChange2}
                                 />
                             </section>
@@ -101,10 +141,7 @@ class FileUpload extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>example</td>
-                                    <td>example</td>
-                                </tr>
+                                {this.imageList()}
                             </tbody>
                         </table>
                     </div>
