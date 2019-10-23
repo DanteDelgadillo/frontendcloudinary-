@@ -6,6 +6,7 @@
   border-radius: 10px;
   padding: 20px;
   margin-left: 100px;
+  background-color: #ddc6ad  
 }
 
 .boxTwo{
@@ -16,4 +17,51 @@
   border-radius: 10px;
   padding: 20px;
   margin-right: 140px;
+  background-color: 	#f0f0e6  
 }
+
+/* ***********************************upload.js css**************** */
+.SearchBar{
+  width: 75%;
+  margin: 0 auto;
+  margin-top: 40px;
+  border: 1px solid black;
+  margin-top: 5%;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #ddc6ad  
+}
+
+/* ************************************pagination********************** */
+
+.pagination{
+  justify-content: center;
+  display: flex;
+}
+
+
+/* ************************carousel**************** */
+.carousel *{
+  width: 50%;
+   margin: 0 auto;
+  }
+
+  .carousel .slide {
+   background: none !important;
+  }
+  .carousel .thumbs-wrapper {
+    margin: 0px auto !important;
+  }
+
+  .carousel .control-dots .dot{
+    width: 14px !important;
+    height: 14px  !important;
+  }
+.carousel .carousel-status{
+  font-size: 15px !important;
+}
+
+.table1{
+  color: black !important;
+}
+  

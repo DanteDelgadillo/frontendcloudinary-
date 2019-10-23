@@ -26,9 +26,10 @@ export default class imageloading extends Component {
 
 
     render() {
-        console.log(this.state.getimages)
-        return (
-            < Carousel showArrows={true} showThumbs={true} >
+        if (!this.state.getimages.length) {
+            return null;
+        } else {
+            return < Carousel className="" showArrows={true} showThumbs={true} >
                 {
                     this.state.getimages.map((image) => (
                         <div key={image._id} >
@@ -38,6 +39,7 @@ export default class imageloading extends Component {
                 }
 
             </Carousel >
-        )
+        }
     }
 }
+

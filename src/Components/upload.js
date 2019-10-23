@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from "axios";
+import Pagination from "./pagination";
 
 const Image = props => (
     <tr>
@@ -16,10 +17,18 @@ class FileUpload extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            titleError: "",
+            descriptonError: "",
+            fileError: "",
             file: null,
             title: "",
             descripton: "",
-            allImages: []
+            allImages: [],
+            upLoadPercentage: 0,
+            newImage: [],
+            searchImage: "",
+            currentPage: 1,
+            postPerPage: 4,
         }
         this.onFormSubmit = this.onFormSubmit.bind(this)
         this.onChange = this.onChange.bind(this)
@@ -30,37 +39,91 @@ class FileUpload extends Component {
         this.fileUpload(this.state.file)
     }
     onChange(e) {
-        this.setState({ file: e.target.files[0] })
+        this.setState({ file: e.target.files[0] }, this.validateForm)
     }
+
+    // upolad image    
+
     fileUpload(file) {
-        const description = this.state.descripton;
-        const title = this.state.title;
+        const isValid = this.validate();
 
-        const url = 'http://localhost:4000/images/add';
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('title', title);
-        formData.append('description', description);
+        if (isValid) {
+            const description = this.state.descripton;
+            const title = this.state.title;
 
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
+            const url = 'http://localhost:4000/images/add';
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('title', title);
+            formData.append('description', description);
+
+
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                },
+                onUploadProgress: (progressEvent) => {
+                    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                    this.setState({
+                        upLoadPercentage: percentCompleted
+                    })
+                }
+
             }
+
+            return axios.post(url, formData, config)
+                .then(response => this.setState({
+                    newImage: response.data
+                }, () => {
+                    const newArray = this.state.allImages;
+                    const pushArray = newArray.push(this.state.newImage);
+                    console.log(pushArray)
+                    this.setState({
+                        allImages: newArray,
+                        titleError: "",
+                        descriptonError: "",
+                        fileError: "",
+                        upLoadPercentage: 0,
+                    })
+                }))
+
         }
-
-        return axios.post(url, formData, config)
-            .then(res => console.log(res.data))
-
-
     }
 
     onChange2 = e => {
         const name = e.target.name;
         const value = e.target.value;
         this.setState({
-            [name]: value
-        })
+            [name]: value,
+            currentPage: 1
+        }, this.validateForm)
     };
+
+    validate = () => {
+        let titleError = "";
+        let descriptonError = "";
+        let fileError = null;
+
+
+        if (!this.state.title) {
+            titleError = "Field is Empty";
+        }
+
+        if (!this.state.descripton) {
+            descriptonError = "Field is Empty";
+        }
+
+        if (!this.state.file) {
+            fileError = "File is Empty";
+        }
+
+        if (titleError || descriptonError || fileError) {
+            this.setState({ titleError, descriptonError, fileError });
+            return false;
+        }
+        return true;
+    };
+
 
     // *****************get all images****************
     componentDidMount() {
@@ -81,7 +144,7 @@ class FileUpload extends Component {
         this.setState({
             allImages: newImage
         })
-        console.log(newImage)
+
         axios.delete("http://localhost:4000/image/delete/" + imageid)
             .then(res => console.log(res.data))
             .catch(function (error) {
@@ -91,22 +154,42 @@ class FileUpload extends Component {
     }
 
 
-    imageList() {
-        return this.state.allImages.map((cuurentImage, i) => {
-            return <Image image={cuurentImage} deleteimage={this.deleteimage.bind(this)} key={i} />
-        })
-    }
-
-
     render() {
+        // filter array 
+        const newArray = this.state.allImages.filter((image) => {
+            return image.title.toLowerCase().includes(this.state.searchImage.toLowerCase())
+        })
+
+        // get current post paginate
+        const indexOfLastPost = this.state.currentPage * this.state.postPerPage;
+        const indexOfFirstPost = indexOfLastPost - this.state.postPerPage;
+        const currentPost = newArray.slice(indexOfFirstPost, indexOfLastPost);
+
+        // change page
+        const paginate = (pageNumber) => this.setState({
+            currentPage: pageNumber
+        })
+
+
         return (
             <React.Fragment>
                 <div>
+                    <form
+                        className="SearchBar">
+                        <label><h5>Search:</h5></label>
+                        <input
+                            className="form-control"
+                            name="searchImage"
+                            type="text"
+                            value={this.state.searchImage}
+                            onChange={this.onChange2}
+                        />
+                    </form>
                     <div className="boxOne">
                         <form onSubmit={this.onFormSubmit}>
                             <h2>Create Image Upload:</h2>
                             <section>
-                                <label className="font">title:</label>
+                                <label className="font">Title:</label>
                                 <input
                                     className="form-control"
                                     type="text"
@@ -115,9 +198,12 @@ class FileUpload extends Component {
                                     value={this.state.title}
                                     onChange={this.onChange2}
                                 />
+                                <div style={{ fontSize: 14, color: "red" }}>
+                                    {this.state.titleError}
+                                </div>
                             </section>
                             <section>
-                                <label className="font">descripton:</label>
+                                <label className="font">Descripton:</label>
                                 <input
                                     className="form-control"
                                     type="text"
@@ -126,11 +212,30 @@ class FileUpload extends Component {
                                     value={this.state.descripton}
                                     onChange={this.onChange2}
                                 />
+                                <div style={{ fontSize: 14, color: "red" }}>
+                                    {this.state.descriptonError}
+                                </div>
                             </section>
                             <br></br>
                             <input type="file" name='file' onChange={this.onChange} />
                             <button type="submit">Upload</button>
+                            <div style={{ fontSize: 14, color: "red" }}>
+                                {this.state.fileError}
+                            </div>
                         </form>
+                        <br />
+                        <div className="progress">
+                            <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{ width: `${this.state.upLoadPercentage}%` }} > {this.state.upLoadPercentage}%</div>
+                        </div>
+                        <br />
+                        {this.state.file ? (
+                            <div className="row mt-5">
+                                <div className="col-md-6 m-auto">
+                                    <img style={{ width: "100%" }} src={this.state.file.name} alt="" />
+                                </div>
+                            </div>
+                        ) : null}
+
                     </div>
                     <div className="boxTwo">
                         <table className="table">
@@ -138,18 +243,27 @@ class FileUpload extends Component {
                                 <tr>
                                     <th >Title</th>
                                     <th>Description</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.imageList()}
+
+                                {currentPost.map((currentImage, i) => {
+                                    return <Image image={currentImage} deleteimage={this.deleteimage.bind(this)} key={i} />
+                                })}
+
+
+
                             </tbody>
                         </table>
+                        <Pagination postPerPage={this.state.postPerPage} totalPost={this.state.allImages.length} paginate={paginate} />
                     </div>
                 </div>
             </React.Fragment>
         )
     }
 }
+
 
 export default FileUpload;
 

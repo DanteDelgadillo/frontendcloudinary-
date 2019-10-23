@@ -15,11 +15,10 @@ class navBar extends Component {
         return (
 
             <React.Fragment>
-                <Navbar bg="dark" variant="dark">
-                    <Navbar.Brand href="/">Navbar</Navbar.Brand>
+                <Navbar sticky="top" variant="dark">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/">Home</Nav.Link>
-                        <Nav.Link href="/upload">Add Images</Nav.Link>
+                        <Nav.Link href="/">Images</Nav.Link>
+                        <Nav.Link href="/upload">Upload Images</Nav.Link>
                     </Nav>
                 </Navbar>
             </React.Fragment>
