@@ -29,6 +29,21 @@
   background-color: #80999b  
 }
 
+.table thead th {
+  border-bottom: 1px solid #1b1b1b !important;
+}
+
+.table td, .table th {
+
+  border-top: 1px solid #1b1b1b  !important;
+}
+
+.page-link {
+
+  color: #1b1b1b !important;
+
+}
+
 /* ************************************pagination********************** */
 
 .pagination{
