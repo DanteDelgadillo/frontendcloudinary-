@@ -15,7 +15,7 @@ class navBar extends Component {
         return (
 
             <React.Fragment>
-                <Navbar sticky="top" variant="dark">
+                <Navbar sticky="top" variant="dark" expand="lg">
                     <Nav className="mr-auto">
                         <Nav.Link href="/">Images</Nav.Link>
                         <Nav.Link href="/upload">Upload Images</Nav.Link>

@@ -218,7 +218,7 @@ class FileUpload extends Component {
                             </section>
                             <br></br>
                             <input type="file" name='file' onChange={this.onChange} />
-                            <button type="submit">Upload</button>
+                            <button type="submit" className="btn btn-primary">Upload</button>
                             <div style={{ fontSize: 14, color: "red" }}>
                                 {this.state.fileError}
                             </div>

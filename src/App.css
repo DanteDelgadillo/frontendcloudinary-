@@ -1,23 +1,21 @@
 .boxOne{
-  border: 1px solid black;
   width: 40%;
   float: left;
   margin-top: 5%;
-  border-radius: 10px;
+  border-radius: 3px;
   padding: 20px;
   margin-left: 100px;
-  background-color: #ddc6ad  
+  background-color: #80999b  
 }
 
 .boxTwo{
-  border: 1px solid black;
   width: 40%;
   float: right;
   margin-top: 5%;
-  border-radius: 10px;
+  border-radius: 3px;
   padding: 20px;
   margin-right: 140px;
-  background-color: 	#f0f0e6  
+  background-color: 	#80999b  
 }
 
 /* ***********************************upload.js css**************** */
@@ -25,11 +23,10 @@
   width: 75%;
   margin: 0 auto;
   margin-top: 40px;
-  border: 1px solid black;
   margin-top: 5%;
-  border-radius: 10px;
+  border-radius: 3px;
   padding: 10px;
-  background-color: #ddc6ad  
+  background-color: #80999b  
 }
 
 /* ************************************pagination********************** */
@@ -65,3 +62,9 @@
   color: black !important;
 }
   
+
+
+/* **********************Nav bar **************** */
+.navbar-dark .navbar-nav .nav-link{
+  font-size: 20px;
+}
