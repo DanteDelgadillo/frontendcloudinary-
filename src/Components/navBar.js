@@ -18,8 +18,8 @@ class navBar extends Component {
             <React.Fragment>
                 <Navbar sticky="top" variant="dark" expand="lg">
                     <Nav className="mr-auto">
-                        <Link to="/">Images</Link>
-                        <Link to="/upload">Upload Images</Link>
+                        <Link className="nav-link navbar-brand fontstyle" to="/">Images</Link>
+                        <Link className="nav-link navbar-brand fontstyle" to="/upload">Upload Images</Link>
                     </Nav>
                 </Navbar>
             </React.Fragment>
