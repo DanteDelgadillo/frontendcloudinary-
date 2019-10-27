@@ -15,7 +15,7 @@ export default class imageloading extends Component {
     }
 
     componentDidMount() {
-        axios.get("http://localhost:4000/getAllImages")
+        axios.get(`${process.env.REACT_APP_API_URL}/getAllImages`)
             .then(response => {
                 this.setState({ getimages: response.data });
             })

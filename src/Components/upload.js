@@ -51,7 +51,7 @@ class FileUpload extends Component {
             const description = this.state.descripton;
             const title = this.state.title;
 
-            const url = 'http://localhost:4000/images/add';
+            const url = `${process.env.REACT_APP_API_URL}/images/add`;
             const formData = new FormData();
             formData.append('file', file);
             formData.append('title', title);
@@ -127,7 +127,7 @@ class FileUpload extends Component {
 
     // *****************get all images****************
     componentDidMount() {
-        axios.get("http://localhost:4000/getAllImages")
+        axios.get(`${process.env.REACT_APP_API_URL}/getAllImages`)
             .then(response => {
                 this.setState({ allImages: response.data });
             })
@@ -145,7 +145,7 @@ class FileUpload extends Component {
             allImages: newImage
         })
 
-        axios.delete("http://localhost:4000/image/delete/" + imageid)
+        axios.delete(`${process.env.REACT_APP_API_URL}/image/delete/` + imageid)
             .then(res => console.log(res.data))
             .catch(function (error) {
                 console.log(error);
