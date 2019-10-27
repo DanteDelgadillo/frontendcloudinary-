@@ -11,8 +11,9 @@ import imageshomepage from "./Components/imageloading";
 function App() {
   return (
     <React.Fragment >
-      <NavBar />
+
       <Router>
+        <NavBar />
         {/* <div>
           <Main />
         </div> */}
