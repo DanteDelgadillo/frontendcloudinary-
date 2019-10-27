@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Navbar, Nav, } from 'react-bootstrap';
+import { Link } from "react-router-dom"
 
 
 
@@ -17,8 +18,8 @@ class navBar extends Component {
             <React.Fragment>
                 <Navbar sticky="top" variant="dark" expand="lg">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/">Images</Nav.Link>
-                        <Nav.Link href="/upload">Upload Images</Nav.Link>
+                        <Link to="/">Images</Link>
+                        <Link to="/upload">Upload Images</Link>
                     </Nav>
                 </Navbar>
             </React.Fragment>
