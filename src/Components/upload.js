@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import Pagination from "./pagination";
+import Swal from "sweetalert2";
 
 const Image = props => (
     <tr>
@@ -92,6 +93,11 @@ class FileUpload extends Component {
 
 
                     })
+                    Swal.fire(
+                        'Image Upload successful!',
+                        '',
+                        'success'
+                    )
                 }))
 
         }
@@ -102,8 +108,16 @@ class FileUpload extends Component {
         const value = e.target.value;
         this.setState({
             [name]: value,
-            currentPage: 1
         }, this.validateForm)
+    };
+
+    onChange3 = e => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({
+            [name]: value,
+            currentPage: 1
+        })
     };
 
     validate = () => {
@@ -157,6 +171,11 @@ class FileUpload extends Component {
             .catch(function (error) {
                 console.log(error);
             })
+        Swal.fire(
+            'Image Deleted successful!',
+            '',
+            'error'
+        )
 
     }
 
@@ -197,7 +216,7 @@ class FileUpload extends Component {
                             name="searchImage"
                             type="text"
                             value={this.state.searchImage}
-                            onChange={this.onChange2}
+                            onChange={this.onChange3}
                         />
                     </form>
                     <div className="boxOne">
