@@ -29,6 +29,7 @@ class FileUpload extends Component {
             searchImage: "",
             currentPage: 1,
             postPerPage: 4,
+            hide: true
         }
         this.onFormSubmit = this.onFormSubmit.bind(this)
         this.onChange = this.onChange.bind(this)
@@ -84,6 +85,12 @@ class FileUpload extends Component {
                         descriptonError: "",
                         fileError: "",
                         upLoadPercentage: 0,
+                        hide: true,
+                        file: null,
+                        title: "",
+                        descripton: "",
+
+
                     })
                 }))
 
@@ -153,6 +160,12 @@ class FileUpload extends Component {
 
     }
 
+    handleChange = (e) => {
+        this.setState({
+            hide: false
+        })
+    }
+
 
     render() {
         // filter array 
@@ -169,6 +182,8 @@ class FileUpload extends Component {
         const paginate = (pageNumber) => this.setState({
             currentPage: pageNumber
         })
+
+        const style = this.state.hide ? { display: 'none' } : { display: true }
 
 
         return (
@@ -218,13 +233,13 @@ class FileUpload extends Component {
                             </section>
                             <br></br>
                             <input type="file" name='file' onChange={this.onChange} />
-                            <button type="submit" className="btn btn-primary">Upload</button>
+                            <button type="submit" onClick={this.handleChange} className="btn btn-primary">Upload</button>
                             <div style={{ fontSize: 14, color: "red" }}>
                                 {this.state.fileError}
                             </div>
                         </form>
                         <br />
-                        <div className="progress">
+                        <div className="progress" style={style}>
                             <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{ width: `${this.state.upLoadPercentage}%` }} > {this.state.upLoadPercentage}%</div>
                         </div>
                         <br />
@@ -238,24 +253,26 @@ class FileUpload extends Component {
 
                     </div>
                     <div className="boxTwo">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th >Title</th>
-                                    <th>Description</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <div className="table-responsive">
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th >Title</th>
+                                        <th>Description</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                {currentPost.map((currentImage, i) => {
-                                    return <Image image={currentImage} deleteimage={this.deleteimage.bind(this)} key={i} />
-                                })}
+                                    {currentPost.map((currentImage, i) => {
+                                        return <Image image={currentImage} deleteimage={this.deleteimage.bind(this)} key={i} />
+                                    })}
 
 
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                         <Pagination postPerPage={this.state.postPerPage} totalPost={this.state.allImages.length} paginate={paginate} />
                     </div>
                 </div>
