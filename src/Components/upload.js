@@ -219,80 +219,83 @@ class FileUpload extends Component {
                             onChange={this.onChange3}
                         />
                     </form>
-                    <div className="boxOne">
-                        <form onSubmit={this.onFormSubmit}>
-                            <h2>Create Image Upload:</h2>
-                            <section>
-                                <label className="font">Title:</label>
-                                <input
-                                    className="form-control"
-                                    type="text"
-                                    name="title"
-                                    id="title"
-                                    value={this.state.title}
-                                    onChange={this.onChange2}
-                                />
+                    <div className="flex-container">
+                        <div className="boxOne">
+                            <form onSubmit={this.onFormSubmit}>
+                                <h2>Create Image Upload:</h2>
+                                <section>
+                                    <label className="font">Title:</label>
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        name="title"
+                                        id="title"
+                                        value={this.state.title}
+                                        onChange={this.onChange2}
+                                    />
+                                    <div style={{ fontSize: 14, color: "red" }}>
+                                        {this.state.titleError}
+                                    </div>
+                                </section>
+                                <section>
+                                    <label className="font">Descripton:</label>
+                                    <input
+                                        className="form-control"
+                                        type="text"
+                                        name="descripton"
+                                        id="descripton"
+                                        value={this.state.descripton}
+                                        onChange={this.onChange2}
+                                    />
+                                    <div style={{ fontSize: 14, color: "red" }}>
+                                        {this.state.descriptonError}
+                                    </div>
+                                </section>
+                                <br></br>
+                                <input type="file" name='file' onChange={this.onChange} />
+                                <button type="submit" onClick={this.handleChange} className="btn btn-primary">Upload</button>
                                 <div style={{ fontSize: 14, color: "red" }}>
-                                    {this.state.titleError}
+                                    {this.state.fileError}
                                 </div>
-                            </section>
-                            <section>
-                                <label className="font">Descripton:</label>
-                                <input
-                                    className="form-control"
-                                    type="text"
-                                    name="descripton"
-                                    id="descripton"
-                                    value={this.state.descripton}
-                                    onChange={this.onChange2}
-                                />
-                                <div style={{ fontSize: 14, color: "red" }}>
-                                    {this.state.descriptonError}
-                                </div>
-                            </section>
-                            <br></br>
-                            <input type="file" name='file' onChange={this.onChange} />
-                            <button type="submit" onClick={this.handleChange} className="btn btn-primary">Upload</button>
-                            <div style={{ fontSize: 14, color: "red" }}>
-                                {this.state.fileError}
+                            </form>
+                            <br />
+                            <div className="progress" style={style}>
+                                <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{ width: `${this.state.upLoadPercentage}%` }} > {this.state.upLoadPercentage}%</div>
                             </div>
-                        </form>
-                        <br />
-                        <div className="progress" style={style}>
-                            <div className="progress-bar progress-bar-striped bg-info" role="progressbar" style={{ width: `${this.state.upLoadPercentage}%` }} > {this.state.upLoadPercentage}%</div>
-                        </div>
-                        <br />
-                        {this.state.file ? (
-                            <div className="row mt-5">
-                                <div className="col-md-6 m-auto">
-                                    <img style={{ width: "100%" }} src={this.state.file.name} alt="" />
+                            <br />
+                            {this.state.file ? (
+                                <div className="row mt-5">
+                                    <div className="col-md-6 m-auto">
+                                        <img style={{ width: "100%" }} src={this.state.file.name} alt="" />
+                                    </div>
                                 </div>
-                            </div>
-                        ) : null}
+                            ) : null}
 
-                    </div>
-                    <div className="boxTwo">
-                        <div className="table-responsive">
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th >Title</th>
-                                        <th>Description</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    {currentPost.map((currentImage, i) => {
-                                        return <Image image={currentImage} deleteimage={this.deleteimage.bind(this)} key={i} />
-                                    })}
-
-
-
-                                </tbody>
-                            </table>
                         </div>
-                        <Pagination postPerPage={this.state.postPerPage} totalPost={this.state.allImages.length} paginate={paginate} />
+                        <div className="boxTwo">
+                            <div className="table-responsive">
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th >Title</th>
+                                            <th>Description</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {currentPost.map((currentImage, i) => {
+                                            return <Image image={currentImage} deleteimage={this.deleteimage.bind(this)} key={i} />
+                                        })}
+
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <Pagination postPerPage={this.state.postPerPage} totalPost={this.state.allImages.length} paginate={paginate} />
+                        </div>
                     </div>
                 </div>
             </React.Fragment>

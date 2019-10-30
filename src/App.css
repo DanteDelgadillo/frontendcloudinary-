@@ -1,29 +1,27 @@
 .boxOne{
   width: 40%;
-  float: left;
   margin-top: 5%;
   border-radius: 3px;
   padding: 20px;
-  margin-left: 100px;
+  margin: 25px;
   background-color: #80999b  
 }
 
 .boxTwo{
   width: 40%;
-  float: right;
   margin-top: 5%;
   border-radius: 3px;
   padding: 20px;
-  margin-right: 140px;
-  background-color: 	#80999b  
+  margin: 25px;
+  background-color: #80999b  
 }
+
+
 
 /* ***********************************upload.js css**************** */
 .SearchBar{
   width: 75%;
   margin: 0 auto;
-  margin-top: 40px;
-  margin-top: 5%;
   border-radius: 3px;
   padding: 10px;
   background-color: #80999b  
@@ -43,6 +41,16 @@
   color: #1b1b1b !important;
 
 }
+.flex-container{
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  width: 75%;
+  margin: 0 auto;
+  justify-content: center;
+ 
+}
+
 
 /* ************************************pagination********************** */
 
@@ -82,4 +90,34 @@
 /* **********************Nav bar **************** */
 .navbar-dark .navbar-nav .nav-link{
   font-size: 20px;
+}
+
+
+/* media css */
+@media (max-width: 1024px) {
+  .boxOne {
+    width: 100%;
+    margin-top: 5%;
+    border-radius: 3px;
+    padding: 20px;
+    margin: auto;
+    margin: 5px;
+    background-color: #80999b ;
+    order: 2;
+
+  }
+}
+
+@media (max-width: 1024px) {
+  .boxTwo {
+    width: 100%;
+    margin-top: 5%;
+    border-radius: 3px;
+    padding: 20px;
+    margin: auto;
+    margin: 5px;
+    background-color: #80999b ;
+    order: 1;
+
+  }
 }
